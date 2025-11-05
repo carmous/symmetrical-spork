@@ -14,7 +14,7 @@
   var clr="white"
  
 function setup() {
-  createCanvas(1000, 800);
+  createCanvas(windowWidth, windowHeight);
  
    createCirc();
     createAnsBoxes();
@@ -76,6 +76,13 @@ function mousePressed(){
   }
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
-
+function keyIsPressed () {
+  if(keyCode == 81){
+    app.quit();
+  }
+}
 
