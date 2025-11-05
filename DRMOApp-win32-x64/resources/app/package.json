@@ -1,0 +1,13 @@
+{
+  "name": "drmo-project",
+  "version": "1.0.0",
+  "description": "p5.js drag-and-drop circle project",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
