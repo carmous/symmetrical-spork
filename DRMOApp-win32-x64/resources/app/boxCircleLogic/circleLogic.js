@@ -15,7 +15,7 @@ function createCirc(){
   var y=150;
   for(var i=0; i<totalBadges; i++){
    circles.push({
-     x: 700,
+     x: 1000,
      y: y + i * 60,
      sz: 50,
      index: i,

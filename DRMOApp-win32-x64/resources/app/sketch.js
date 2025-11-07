@@ -13,29 +13,41 @@
   let correctAns = [false,false,false,false];
   var clr="white"
  
+
 function setup() {
-  createCanvas(1000, 800);
- 
-   createCirc();
-    createAnsBoxes();
+  fullscreen(true);
+  createCanvas(windowHeight, windowWidth);
+  createCirc();
+  createAnsBoxes();
   
   
 }
 
 function draw() {
-  
+  let winW = width/10; 
+  let winH = height/8;
+  let safeSz = 600; 
   background(220);
-  fill("lightblue");
-  
-  rect(50,150,400,400);
-  
-  // logic to draw cirlces and ansboxes 
+
   push();
-  rectMode(CENTER);
+  fill("lightblue");
+
+  translate(winW, winH);  
+
+  rect(75,75,safeSz,safeSz,10);
+
+  // logic to draw cirlces and ansboxes 
+ 
+
+
+ 
+  
   fill(clr)
+  
   drawAnsBox();
+    pop();
   drawCircles();
-  pop();
+
  
   //logic for click and follow mouse
   if (following && selected) {
@@ -76,6 +88,8 @@ function mousePressed(){
   }
 }
 
-
+function windowResized(){
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 
