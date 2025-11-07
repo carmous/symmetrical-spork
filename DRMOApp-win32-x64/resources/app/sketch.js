@@ -5,6 +5,9 @@
 // method based on what engine final project uses )
 
 
+
+
+
   let circles= [];
   let ansBox= [];
   let selected = null;
@@ -18,7 +21,10 @@ function setup() {
  
    createCirc();
     createAnsBoxes();
-  
+  document.addEventListener('click', () => {
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.send('window-all-closed');
+  });
   
 }
 
@@ -80,9 +86,4 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function keyIsPressed () {
-  if(keyCode == 81){
-    app.quit();
-  }
-}
 

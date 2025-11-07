@@ -19,8 +19,13 @@ function createWindow() {
   app.whenReady().then(() =>{
   createWindow(); 
 
-  ipcMain.on('close-app', () => {
-    win.close();
+  
+
+ipcMain.on('force-close-app', () => {
+  console.log('Force closing the app...');
+  app.exit(0); 
+
+
   });
 });
 
