@@ -62,6 +62,6 @@ function check_All_Ans(){
     text("Correct!!!", width/2, height/2, 500,500);
       pop();
   
-    }else{}
+    }
   
 }

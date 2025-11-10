@@ -41,15 +41,20 @@ function draw() {
   background(220);
 
   push();
-  fill("lightblue");
+  fill('red');
+  rect(width/1.1,50,50,50);
+  textSize(70);
+  fill('white');
+  text('X',width/1.1,100);
+  pop();
 
-  
+
+  push();
+  fill("lightblue");
 
   rect(75,75,safeSz,safeSz,10);
 
   // logic to draw cirlces and ansboxes 
- 
-  
   fill(clr)
   rectMode(CENTER);
   drawAnsBox();
@@ -61,7 +66,6 @@ function draw() {
   if (following && selected) {
     selected.x = mouseX;
     selected.y = mouseY;
-  
   };
   
   //logic to check answers
@@ -69,24 +73,11 @@ function draw() {
   rect(150,400,200,50);
 
 
-  //checks answers when mouse pressed on lever
-  if(dist(mouseX,mouseY,150+100,400+25)<150/2  &&  mouseIsPressed){
-  check_All_Ans();
-  push();
-  fill('green');
-  textSize(50);
-  Text(prnt, 600,800);
-  pop();
-  }
+ 
+
   snapAns();
  
-  push();
-  fill('red');
-  rect(width/1.1,50,50,50);
-  textSize(70);
-  fill('white');
-  text('X',width/1.1,100);
-  pop();
+  
 
 }
 
@@ -122,6 +113,18 @@ function mousePressed(){
 
   if(dist(mouseX,mouseY,width/1.1+25,100-25)<=25)
     ipcRenderer.send('quit-app');
+
+
+
+
+   if(dist(mouseX,mouseY,150+100,400+25)<150/2){ // checks for correct ansewrs when lever is clicked
+  check_All_Ans();
+  // push();
+  // fill('green');
+  // textSize(50);
+  // Text(prnt, 600,800);
+  // pop();
+  }
 
 }
 
