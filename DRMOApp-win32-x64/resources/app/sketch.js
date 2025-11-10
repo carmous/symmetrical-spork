@@ -4,6 +4,16 @@
 // will also need to import sprites, (or use other 
 // method based on what engine final project uses )
 
+const { ipcRenderer } = require('electron');
+
+
+// Call this function to quit the app
+function keyPressed() {
+  if(key === 'q')
+  ipcRenderer.send('quit-app');
+}
+
+
 
   let circles= [];
   let ansBox= [];
@@ -11,7 +21,8 @@
   let following = false;
   let ans = [];
   let correctAns = [false,false,false,false];
-  var clr="white"
+  var clr="white";
+  var prnt = null;
  
 
 function setup() {
@@ -50,12 +61,33 @@ function draw() {
   if (following && selected) {
     selected.x = mouseX;
     selected.y = mouseY;
+  
   };
   
   //logic to check answers
-  snapAns();
+  fill('whiteblue');
+  rect(150,400,200,50);
+
+
+  //checks answers when mouse pressed on lever
+  if(dist(mouseX,mouseY,150+100,400+25)<150/2  &&  mouseIsPressed){
   check_All_Ans();
-  
+  push();
+  fill('green');
+  textSize(50);
+  Text(prnt, 600,800);
+  pop();
+  }
+  snapAns();
+ 
+  push();
+  fill('red');
+  rect(width/1.1,50,50,50);
+  textSize(70);
+  fill('white');
+  text('X',width/1.1,100);
+  pop();
+
 }
 
 function click(obj){
@@ -86,6 +118,11 @@ function mousePressed(){
     selected = null;
 
   };
+
+
+  if(dist(mouseX,mouseY,width/1.1+25,100-25)<=25)
+    ipcRenderer.send('quit-app');
+
 }
 
 function windowResized(){

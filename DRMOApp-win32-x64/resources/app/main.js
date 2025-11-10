@@ -1,4 +1,8 @@
-const { app, BrowserWindow } = require('electron');
+
+
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -8,7 +12,8 @@ function createWindow() {
     fullscreenable: true,
     autoHideMenuBar:true,
     webPreferences: {
-      nodeIntegration: true 
+      nodeIntegration: true, 
+      contextIsolation: false   
     }
   });
 
@@ -16,6 +21,10 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow);
+
+ipcMain.on('quit-app', () => {
+  app.quit();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();

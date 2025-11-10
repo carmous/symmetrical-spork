@@ -24,7 +24,7 @@ function snapAns(){
         if(d < c.sz/2){
           // snap circle to box
           c.x = b.x;
-          c.y = b.y;
+          c.y = b.y-25;
 
          
           // check if answer is correct for box it snapped too
