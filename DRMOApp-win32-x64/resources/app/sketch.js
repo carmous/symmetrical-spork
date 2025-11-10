@@ -16,7 +16,7 @@
 
 function setup() {
   fullscreen(true);
-  createCanvas(windowHeight, windowWidth);
+  createCanvas(windowWidth, windowHeight);
   createCirc();
   createAnsBoxes();
   
@@ -32,18 +32,15 @@ function draw() {
   push();
   fill("lightblue");
 
-  translate(winW, winH);  
+  
 
   rect(75,75,safeSz,safeSz,10);
 
   // logic to draw cirlces and ansboxes 
  
-
-
- 
   
   fill(clr)
-  
+  rectMode(CENTER);
   drawAnsBox();
     pop();
   drawCircles();
@@ -53,7 +50,7 @@ function draw() {
   if (following && selected) {
     selected.x = mouseX;
     selected.y = mouseY;
-  }
+  };
   
   //logic to check answers
   snapAns();
@@ -66,7 +63,7 @@ function click(obj){
   if(d<obj.sz/2){
     obj.x1=mouseX;
     obj.x2=mouseY;
-  }
+  };
 }
 
 
@@ -80,12 +77,15 @@ function mousePressed(){
         selected = c;
         following = true; // start following
         break;
-      }
-    }
+      };
+    };
   } else {
+    
+   
     following = false;
     selected = null;
-  }
+
+  };
 }
 
 function windowResized(){

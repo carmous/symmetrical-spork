@@ -5,6 +5,11 @@ let answers;
 
 function preload(){
   answers = loadJSON('answerLogic/answerSheet.json');
+
+  for (let i = 0; i<totalbadges ; i++){
+    let filename = `badgeSprites/badge${i}.jpg`;
+    badgeImg.push(loadImage(filename));
+  }
 }
 
 function snapAns(){
@@ -13,7 +18,9 @@ function snapAns(){
       
       for (var b of ansBox){
         
+        
         let d = checkDist(c,b);
+     
         if(d < c.sz/2){
           // snap circle to box
           c.x = b.x;
@@ -41,6 +48,7 @@ function checkAns(obj1,obj2){
 }
 
 function checkDist(obj1,obj2){
+  
   return dist(obj1.x, obj1.y, obj2.x,obj2.y);
 }
 

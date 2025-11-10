@@ -4,7 +4,7 @@ function createAnsBoxes(){
  
   for(var i=0;i<4;i++) {
       ansBox.push({
-        x: 105 + i* ((safeSz)/3),
+        x: 145 + i* ((safeSz)/4),
         y: 150,
         h: 70,
         w: 10,

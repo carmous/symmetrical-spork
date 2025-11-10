@@ -3,12 +3,7 @@ let badgeImg = [];
 let totalBadges = 5;
 
 //logic to dynamically load badges
-function preload(){
-  for (let i = 0; i<totalbadges ; i++){
-    let filename = `badgeSprites/badge${i}.jpg`;
-    badgeImg.push(loadImage(filename));
-  }
-}
+
 
 
 function createCirc(){
