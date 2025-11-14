@@ -26,6 +26,8 @@ function snapAns(){
           c.x = b.x;
           c.y = b.y-25;
 
+          c.snapd = true; //srinks object when snapped
+
          
           // check if answer is correct for box it snapped too
           let correctCircleIndex = answers[b.index]
@@ -36,6 +38,8 @@ function snapAns(){
           
         }
       }
+    }else{
+      c.snapd = false; //brings objects to orignial size when selected
     }
   }
 }
@@ -55,13 +59,26 @@ function checkDist(obj1,obj2){
 function check_All_Ans(){
   
     if(correctAns[0]&&correctAns[1]&&correctAns[2]&&correctAns[3]){
-    clr = "green"
+    clr = "green";
       push();
       textSize(50);
       fill("green");
-    text("Correct!!!", width/2, height/2, 500,500);
+      text("Correct!!!", width/2, height/2);
       pop();
   
+    } else {
+      clr = '#d44747ff';
+      //dont know why but setTimeout comand does not work, ill have to do frame counting for it
+      // setTimeout(() => {
+      // clr = '#dfdfdfff';
+      // }, 1000);
+      
     }
   
 }
+
+function sleep(millisecondsDuration) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, millisecondsDuration);
+  });
+}   

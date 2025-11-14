@@ -7,11 +7,11 @@
 const { ipcRenderer } = require('electron');
 
 
-// Call this function to quit the app
-function keyPressed() {
-  if(key === 'q')
-  ipcRenderer.send('quit-app');
-}
+// temp quit function
+// function keyPressed() {
+//   if(key === 'q')
+//   ipcRenderer.send('quit-app');
+// }
 
 
 
@@ -21,7 +21,7 @@ function keyPressed() {
   let following = false;
   let ans = [];
   let correctAns = [false,false,false,false];
-  var clr="white";
+  var clr ='#dfdfdfff';
   var prnt = null;
  
 
@@ -38,7 +38,7 @@ function draw() {
   let winW = width/10; 
   let winH = height/8;
   let safeSz = 600; 
-  background(220);
+  background(clr);
 
   push();
   fill('red');
@@ -55,7 +55,8 @@ function draw() {
   rect(75,75,safeSz,safeSz,10);
 
   // logic to draw cirlces and ansboxes 
-  fill(clr)
+  
+  fill(clr);
   rectMode(CENTER);
   drawAnsBox();
     pop();
