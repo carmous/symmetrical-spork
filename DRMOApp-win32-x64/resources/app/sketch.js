@@ -6,32 +6,25 @@
 
 const { ipcRenderer } = require('electron');
 
+let circles= [];
+let ansBox= [];
+let selected = null;
+let following = false;
+let ans = [];
+let correctAns = [false,false,false,false];
+var clr ='#dfdfdfff';
+var prnt = null;
+var prntClr;
 
-// temp quit function
-// function keyPressed() {
-//   if(key === 'q')
-//   ipcRenderer.send('quit-app');
-// }
-
-
-
-  let circles= [];
-  let ansBox= [];
-  let selected = null;
-  let following = false;
-  let ans = [];
-  let correctAns = [false,false,false,false];
-  var clr ='#dfdfdfff';
-  var prnt = null;
- 
+let tempFrame;
+let resetDelay = 1500;
 
 function setup() {
   fullscreen(true);
   createCanvas(windowWidth, windowHeight);
   createCirc();
   createAnsBoxes();
-  
-  
+  frameRate(60);
 }
 
 function draw() {
@@ -39,8 +32,9 @@ function draw() {
   let winH = height/8;
   let safeSz = 600; 
   background(clr);
+  text(millis(), )
 
-  push();
+  push(); //red x in top right
   fill('red');
   rect(width/1.1,50,50,50);
   textSize(70);
@@ -48,37 +42,41 @@ function draw() {
   text('X',width/1.1,100);
   pop();
 
-
   push();
   fill("lightblue");
 
   rect(75,75,safeSz,safeSz,10);
 
   // logic to draw cirlces and ansboxes 
-  
   fill(clr);
   rectMode(CENTER);
   drawAnsBox();
     pop();
   drawCircles();
 
- 
   //logic for click and follow mouse
   if (following && selected) {
     selected.x = mouseX;
     selected.y = mouseY;
   };
-  
-  //logic to check answers
+
+  //logic to draw safe
   fill('whiteblue');
   rect(150,400,200,50);
 
-
- 
-
   snapAns();
- 
-  
+
+  if ((clr!=='#dfdfdfff') && millis() - tempFrame >= resetDelay) { //code to reset color, only works here for some reason (probably because answer logic isnt being called for long enough)
+    clr = '#dfdfdfff';  // Reset the color
+    prnt = null;
+  }
+
+  if(prnt){
+    push();
+    textSize(50);
+    text(prnt, width/2,width/2)
+    pop();
+  }
 
 }
 
@@ -90,9 +88,7 @@ function click(obj){
   };
 }
 
-
 function mousePressed(){
-
   if (!following) {
     // first click: check if you clicked a circle
     for (let c of circles) {
@@ -103,34 +99,22 @@ function mousePressed(){
         break;
       };
     };
-  } else {
-    
-   
-    following = false;
-    selected = null;
-
-  };
-
+  }
 
   if(dist(mouseX,mouseY,width/1.1+25,100-25)<=25)
     ipcRenderer.send('quit-app');
 
-
-
-
-   if(dist(mouseX,mouseY,150+100,400+25)<150/2){ // checks for correct ansewrs when lever is clicked
-  check_All_Ans();
-  // push();
-  // fill('green');
-  // textSize(50);
-  // Text(prnt, 600,800);
-  // pop();
+  if(dist(mouseX,mouseY,150+100,400+25)<150/2){ // checks for correct answers when lever is clicked
+    check_All_Ans(tempFrame);
   }
 
+}
+
+function mouseReleased(){
+  following = false;
+  selected = null;
 }
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
 }
-
-

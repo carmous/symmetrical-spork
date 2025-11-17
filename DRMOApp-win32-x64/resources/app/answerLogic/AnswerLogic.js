@@ -1,11 +1,5 @@
-//logic for answers is based off of index, and correct match of index is set in the json file
-
-//logic to load the answerSheet file
-let answers;
-
 function preload(){
   answers = loadJSON('answerLogic/answerSheet.json');
-
   for (let i = 0; i<totalbadges ; i++){
     let filename = `badgeSprites/badge${i}.jpg`;
     badgeImg.push(loadImage(filename));
@@ -13,33 +7,25 @@ function preload(){
 }
 
 function snapAns(){
- for (var c of circles){
+  for (var c of circles){
     if (c !== selected){ // don't snap the one you're dragging
-      
       for (var b of ansBox){
-        
-        
         let d = checkDist(c,b);
-     
-        if(d < c.sz/2){
-          // snap circle to box
+        if(d < c.sz/2){ // snap circle to box
           c.x = b.x;
           c.y = b.y-25;
-
-          c.snapd = true; //srinks object when snapped
-
-         
+          c.snapd = true; //shrinks object when snapped
           // check if answer is correct for box it snapped too
-          let correctCircleIndex = answers[b.index]
+          let correctCircleIndex = answers[b.index];
           if(c.index == correctCircleIndex){
             correctAns[b.index]= true;
-          } else { correctAns[b.index] = false;}
-          
-          
+          } else {
+            correctAns[b.index] = false;
+          }
         }
       }
     }else{
-      c.snapd = false; //brings objects to orignial size when selected
+      c.snapd = false; //brings objects to original size when selected
     }
   }
 }
@@ -47,38 +33,23 @@ function snapAns(){
 function checkAns(obj1,obj2){
   if(obj1.index==obj2.index){
     correctAns=true;
-  } else{ correctAns = false;}
-  
+  } else{
+    correctAns = false;
+  }
 }
 
 function checkDist(obj1,obj2){
-  
   return dist(obj1.x, obj1.y, obj2.x,obj2.y);
 }
 
 function check_All_Ans(){
-  
-    if(correctAns[0]&&correctAns[1]&&correctAns[2]&&correctAns[3]){
+  tempFrame = millis();
+  if(correctAns[0]&&correctAns[1]&&correctAns[2]&&correctAns[3]){
     clr = "green";
-      push();
-      textSize(50);
-      fill("green");
-      text("Correct!!!", width/2, height/2);
-      pop();
-  
-    } else {
-      clr = '#d44747ff';
-      //dont know why but setTimeout comand does not work, ill have to do frame counting for it
-      // setTimeout(() => {
-      // clr = '#dfdfdfff';
-      // }, 1000);
-      
-    }
-  
+    prnt = "Correct!!";
+  } else {
+    //change to red and allow if statement at end of sketch to run
+    clr = '#d44747ff';
+    prnt = "Incorrect!!"
+  }
 }
-
-function sleep(millisecondsDuration) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, millisecondsDuration);
-  });
-}   
