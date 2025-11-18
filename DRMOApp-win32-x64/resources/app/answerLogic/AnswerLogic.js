@@ -1,10 +1,4 @@
-function preload(){
-  answers = loadJSON('answerLogic/answerSheet.json');
-  for (let i = 0; i<totalbadges ; i++){
-    let filename = `badgeSprites/badge${i}.jpg`;
-    badgeImg.push(loadImage(filename));
-  }
-}
+
 
 function snapAns(){
   for (var c of circles){

@@ -11,12 +11,12 @@ function createCirc(){
   for(var i=0; i<totalBadges; i++){
    circles.push({
      x: 1000,
-     y: y + i * 60,
-     sz: 50,
+     y: y + i *  165,
+     sz: 150,
      index: i,
      img: badgeImg[i],
      snapd:false,
-     slSz:25
+     slSz:100
       
     });
   }
@@ -28,19 +28,17 @@ function createCirc(){
 function drawCircles() {
   for (let c of circles) {
     //the code for loading imgages instead of debugCircles
-    // imageMode(CENTER);
-    // Image(c.img, c.x,c.y,c.sz,c.sz)
+    imageMode(CENTER);
+   
 
     if(!c.snapd){
-    circle(c.x, c.y, c.sz);
+    
+     image(c.img, c.x,c.y,c.sz,c.sz);
     }else{
-    circle(c.x, c.y, c.slSz);
+     image(c.img, c.x,c.y,c.slSz,c.slSz);
     }
     
-    push();
-    fill("black");
-    text(c.index,c.x-3,c.y+3)
-    pop();
+   
     
   }
 }

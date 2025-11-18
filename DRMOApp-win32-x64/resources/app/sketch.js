@@ -19,12 +19,25 @@ var prntClr;
 let tempFrame;
 let resetDelay = 1500;
 
+let filename
+
+//preloads ansershwer and images before programs runs
+function preload(){
+  answers = loadJSON('answerLogic/answerSheet.json');
+  for (let i = 0; i<totalBadges ; i++){
+    filename = `badgeSprites/badge${i}.png`;
+    badgeImg.push(loadImage(filename));
+  }
+
+ 
+}
+
 function setup() {
   fullscreen(true);
   createCanvas(windowWidth, windowHeight);
   createCirc();
   createAnsBoxes();
-  frameRate(60);
+  tempImg = loadImage('badgeSprites/badge0.png');
 }
 
 function draw() {
@@ -32,7 +45,7 @@ function draw() {
   let winH = height/8;
   let safeSz = 600; 
   background(clr);
-  text(millis(), )
+  
 
   push(); //red x in top right
   fill('red');
@@ -77,6 +90,8 @@ function draw() {
     text(prnt, width/2,width/2)
     pop();
   }
+
+
 
 }
 

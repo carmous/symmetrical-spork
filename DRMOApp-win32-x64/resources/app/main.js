@@ -13,7 +13,10 @@ function createWindow() {
     autoHideMenuBar:true,
     webPreferences: {
       nodeIntegration: true, 
-      contextIsolation: false   
+      contextIsolation: false,
+      webSecurity: false,
+      allowRunningInsecureContent: true,
+      allowFileAccess: true
     }
   });
 
