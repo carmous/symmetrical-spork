@@ -6,30 +6,38 @@
 
 const { ipcRenderer } = require('electron');
 
-let circles= [];
+
+
+let circles= []; //arrays for badges and answer boxes
 let ansBox= [];
-let selected = null;
+
+let safeSz=600;
+let handleRot=0;
+
+let selected = null; //this is for the snap logic
 let following = false;
-let ans = [];
-let correctAns = [false,false,false,false];
+
+let ans = [];//this allows acces to the correct answers in the json answer sheet
+let correctAns = [false,false,false,false]; //this keeps track of what answer is coorect
+
+
 var clr ='#dfdfdfff';
 var prnt = null;
 var prntClr;
 
-let tempFrame;
+let tempFrame;  //this is for the color resetting logic
 let resetDelay = 1500;
 
-let filename
+let filename; //this is for the spriteprelaod funcition
 
 //preloads ansershwer and images before programs runs
 function preload(){
-  answers = loadJSON('answerLogic/answerSheet.json');
-  for (let i = 0; i<totalBadges ; i++){
+  answers = loadJSON('answerLogic/answerSheet.json');//loads answer sheet
+
+  for (let i = 0; i<totalBadges ; i++){ //loads images and pushes them to array for access
     filename = `badgeSprites/badge${i}.png`;
     badgeImg.push(loadImage(filename));
   }
-
- 
 }
 
 function setup() {
@@ -38,12 +46,14 @@ function setup() {
   createCirc();
   createAnsBoxes();
   tempImg = loadImage('badgeSprites/badge0.png');
+
+  
 }
 
 function draw() {
   let winW = width/10; 
   let winH = height/8;
-  let safeSz = 600; 
+  
   background(clr);
   
 
@@ -58,7 +68,7 @@ function draw() {
   push();
   fill("lightblue");
 
-  rect(75,75,safeSz,safeSz,10);
+  drwSafe();
 
   // logic to draw cirlces and ansboxes 
   fill(clr);
@@ -73,9 +83,11 @@ function draw() {
     selected.y = mouseY;
   };
 
-  //logic to draw safe
-  fill('whiteblue');
-  rect(150,400,200,50);
+  //logic to draw safe handle
+  drwHandle();
+  rotHandle();
+  
+  
 
   snapAns();
 
@@ -103,9 +115,9 @@ function click(obj){
   };
 }
 
-function mousePressed(){
+function mousePressed(){ //for dragging badges, changed to hold and drag for tablet realease
   if (!following) {
-    // first click: check if you clicked a circle
+    
     for (let c of circles) {
       let d = dist(mouseX, mouseY, c.x, c.y);
       if (d < c.sz / 2) {
@@ -130,6 +142,57 @@ function mouseReleased(){
   selected = null;
 }
 
-function windowResized(){
+function windowResized(){ //loading window to mach screen size
   resizeCanvas(windowWidth, windowHeight);
+}
+
+
+function drwSafe(){
+  let x = 20
+  push();
+  translate(75,75)
+  fill("lightblue");
+  rect(safeSz*.12,safeSz-50,100,100,35);
+  rect(safeSz*.72,safeSz-50,100,100,35);
+ 
+  rect(0,0,safeSz,safeSz,10);
+  
+  rect(0+x,0+x,safeSz-2*x,safeSz-2*x,10);
+
+  pop();
+  
+
+  
+ 
+ 
+}
+
+function drwHandle(){
+  fill('whiteblue'); //handle
+  push();
+  
+  translate(350,425);
+  rotate(handleRot);
+  
+
+
+  beginShape();
+  vertex(-200,-20);
+  vertex(-200,20);
+  vertex(0,20);
+  bezierVertex(20,20,20,-20,0,-20);
+  endShape(CLOSE);
+
+
+  pop();
+}
+
+function rotHandle(){
+  angleMode(DEGREES);
+  if((dist(mouseX,mouseY,150+100,400+25)<150/2)){ // checks for correct answers when lever is clicked
+    if(handleRot >= -35  && handleRot<1)
+      handleRot= handleRot-5;  
+  
+  }else{ handleRot=0;}
+
 }

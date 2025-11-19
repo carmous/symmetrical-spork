@@ -10,7 +10,7 @@ function createCirc(){
   var y=150;
   for(var i=0; i<totalBadges; i++){
    circles.push({
-     x: 1000,
+     x: width*.75,
      y: y + i *  165,
      sz: 150,
      index: i,

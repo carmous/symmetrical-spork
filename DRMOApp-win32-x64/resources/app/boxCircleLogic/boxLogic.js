@@ -1,5 +1,6 @@
 function createAnsBoxes(){
-  let safeSz = 600;
+ 
+  
   
  
   for(var i=0;i<4;i++) {
