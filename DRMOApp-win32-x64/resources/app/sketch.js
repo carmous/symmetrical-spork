@@ -33,6 +33,8 @@ let filename; //this is for the spriteprelaod funcition
 let topPart;
 let bottomPart;
 
+let scrolly=0;
+
 //preloads ansershwer and images before programs runs
 function preload(){
   answers = loadJSON('answerLogic/answerSheet.json');//loads answer sheet
@@ -60,11 +62,25 @@ function setup() {
 function draw() {
   let winW = width/10; 
   let winH = height/8;
-  
+
+ let contheight = bottomPart - topPart; // total content height
+let viewHeight = height;               // visible window height
+
+// scrollbar height based on ratio of viewport to content
+let scrollheight = (viewHeight / contheight) * viewHeight;
+
+// scrollbar Y position proportional to scrolly
+  let scrollbarY = (scrolly / (contheight - viewHeight)) * (viewHeight - scrollheight);
+
+  let scrollRatio = contheight/height; 
+
   background(clr);
   circle(800, topPart, 10);
   circle(800, bottomPart, 10);
-
+  push();
+  fill('white');
+  rect(width-10, scrollY , 10,scrollRatio*100);
+  pop();
 
 
   push(); //red x in top right
@@ -220,6 +236,7 @@ function mouseWheel(event){
     }
     topPart +=5;
     bottomPart+=5;
+    scrolly+=5;
   }
   }
   else{
@@ -231,7 +248,11 @@ function mouseWheel(event){
     }
       topPart -=5;
       bottomPart-=5;
+      scrolly-=5;
   }
   }
+
+
+
   return false;
 }

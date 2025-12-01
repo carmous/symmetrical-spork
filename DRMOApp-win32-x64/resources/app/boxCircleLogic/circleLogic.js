@@ -11,7 +11,7 @@ function createCirc(){
   for(var i=0; i<totalBadges; i++){
    circles.push({
      x: width*.75,
-     y: y + i *  165,
+     y: y + i *  465,
      sz: 150,
      index: i,
      img: badgeImg[i],
