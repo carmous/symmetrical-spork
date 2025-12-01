@@ -30,6 +30,9 @@ let resetDelay = 1500;
 
 let filename; //this is for the spriteprelaod funcition
 
+let topPart;
+let bottomPart;
+
 //preloads ansershwer and images before programs runs
 function preload(){
   answers = loadJSON('answerLogic/answerSheet.json');//loads answer sheet
@@ -40,14 +43,18 @@ function preload(){
   }
 }
 
+
 function setup() {
   fullscreen(true);
   createCanvas(windowWidth, windowHeight);
   createCirc();
   createAnsBoxes();
   tempImg = loadImage('badgeSprites/badge0.png');
+  topScroll = width; 
+ 
 
-  
+  topPart = circles[0].y;
+  bottomPart = circles[circles.length - 1].y;
 }
 
 function draw() {
@@ -55,7 +62,10 @@ function draw() {
   let winH = height/8;
   
   background(clr);
-  
+  circle(800, topPart, 10);
+  circle(800, bottomPart, 10);
+
+
 
   push(); //red x in top right
   fill('red');
@@ -112,7 +122,7 @@ function click(obj){
   if(d<obj.sz/2){
     obj.x1=mouseX;
     obj.x2=mouseY;
-  };
+  }
 }
 
 function mousePressed(){ //for dragging badges, changed to hold and drag for tablet realease
@@ -144,6 +154,7 @@ function mouseReleased(){
 
 function windowResized(){ //loading window to mach screen size
   resizeCanvas(windowWidth, windowHeight);
+  topScroll = width;
 }
 
 
@@ -195,4 +206,32 @@ function rotHandle(){
   
   }else{ handleRot=0;}
 
+}
+
+
+function mouseWheel(event){
+ 
+  if (event.delta>0){
+    if(topPart<=200){
+    for(let c of circles){
+      if (c.x>width-600)
+      c.y+=5;
+      
+    }
+    topPart +=5;
+    bottomPart+=5;
+  }
+  }
+  else{
+    if(bottomPart >=height-200){
+    for(let c of circles){
+      if (c.x>width-600)
+      c.y-=5;
+     
+    }
+      topPart -=5;
+      bottomPart-=5;
+  }
+  }
+  return false;
 }
